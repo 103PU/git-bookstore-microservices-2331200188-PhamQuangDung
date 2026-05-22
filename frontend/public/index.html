@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>BookBase - Microservices Bookstore</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+<div id="app">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="logo">
+      <i data-lucide="book-open"></i>
+      <span>BookBase</span>
+    </div>
+    <nav>
+      <ul class="nav-menu">
+        <li><a href="#" id="nav-discover" class="nav-item active"><i data-lucide="home"></i> <span>Discover</span></a></li>
+        <li><a href="#" id="nav-orders" class="nav-item"><i data-lucide="shopping-bag"></i> <span>My Orders</span></a></li>
+        <li><a href="#" id="nav-system" class="nav-item"><i data-lucide="activity"></i> <span>System Status</span></a></li>
+        <li><a href="#" class="nav-item"><i data-lucide="grid"></i> <span>Category</span></a></li>
+        <li><a href="#" class="nav-item"><i data-lucide="library"></i> <span>My Library</span></a></li>
+      </ul>
+    </nav>
+    <div class="sidebar-footer">
+      <ul class="nav-menu">
+        <li><a href="#" class="nav-item"><i data-lucide="settings"></i> <span>Settings</span></a></li>
+        <li><a href="#" class="nav-item"><i data-lucide="help-circle"></i> <span>Support</span></a></li>
+        <li><a href="#" id="btn-logout" class="nav-item" style="display:none;"><i data-lucide="log-out"></i> <span>Logout</span></a></li>
+        <li><a href="#" id="btn-show-login" class="nav-item"><i data-lucide="log-in"></i> <span>Login</span></a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="content">
+    <header class="top-bar">
+      <div class="search-bar">
+        <i data-lucide="search"></i>
+        <input type="text" placeholder="Search your favourite books">
+      </div>
+      <div class="user-profile">
+        <div class="user-info">
+          <div class="user-name" id="user-name">Guest</div>
+          <div class="user-role" id="user-role">Not signed in</div>
+        </div>
+        <div class="avatar">
+          <i data-lucide="user"></i>
+        </div>
+      </div>
+    </header>
+
+    <!-- Page: Discover -->
+    <div id="page-discover">
+      <section id="recommended-section">
+        <div class="section-header">
+          <h2>Recommended</h2>
+          <a href="#" class="see-all">See All ></a>
+        </div>
+        <div id="recommended-list" class="product-grid"></div>
+      </section>
+
+      <section id="categories-section">
+        <div class="section-header">
+          <h2>Categories</h2>
+        </div>
+        <div class="category-list">
+          <div class="category-pill active">All</div>
+          <div class="category-pill">Sci-Fi</div>
+          <div class="category-pill">Fantasy</div>
+          <div class="category-pill">Drama</div>
+          <div class="category-pill">Business</div>
+          <div class="category-pill">Education</div>
+        </div>
+        <div id="product-list" class="product-grid"></div>
+      </section>
+    </div>
+
+    <!-- Page: Orders -->
+    <div id="page-orders" style="display:none;">
+      <section>
+        <div class="section-header">
+          <h2>Order Management (Order Service)</h2>
+        </div>
+        <div id="order-list" class="order-container">
+          <!-- Orders will be rendered here -->
+        </div>
+      </section>
+    </div>
+
+    <!-- Page: System Status -->
+    <div id="page-system" style="display:none;">
+      <section>
+        <div class="section-header">
+          <h2>System Health & Services</h2>
+        </div>
+        <div class="status-grid">
+          <div class="status-card">
+            <div class="status-icon"><i data-lucide="server"></i></div>
+            <div class="status-info">
+              <h3>API Gateway</h3>
+              <p class="status-tag online">Online</p>
+              <small>Port: 8000</small>
+            </div>
+          </div>
+          <div class="status-card">
+            <div class="status-icon"><i data-lucide="users"></i></div>
+            <div class="status-info">
+              <h3>User Service</h3>
+              <p class="status-tag online">Online</p>
+              <small>Port: 8001 (MongoDB)</small>
+            </div>
+          </div>
+          <div class="status-card">
+            <div class="status-icon"><i data-lucide="book"></i></div>
+            <div class="status-info">
+              <h3>Product Service</h3>
+              <p class="status-tag online">Online</p>
+              <small>Port: 8002 (Postgres)</small>
+            </div>
+          </div>
+          <div class="status-card">
+            <div class="status-icon"><i data-lucide="shopping-cart"></i></div>
+            <div class="status-info">
+              <h3>Order Service</h3>
+              <p class="status-tag online">Online</p>
+              <small>Port: 8003 (Postgres)</small>
+            </div>
+          </div>
+          <div class="status-card">
+            <div class="status-icon"><i data-lucide="message-square"></i></div>
+            <div class="status-info">
+              <h3>Message Broker</h3>
+              <p class="status-tag online">Online</p>
+              <small>RabbitMQ (AMQP)</small>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Admin Tools -->
+    <section id="admin-tools" style="display:none;">
+      <div class="section-header">
+        <h2>Admin Tools</h2>
+      </div>
+      <button class="btn-primary" id="btn-show-create-product" style="width: auto; padding: 0.5rem 1rem;">
+        <i data-lucide="plus"></i> Create New Product
+      </button>
+    </section>
+  </main>
+
+  <!-- Detail Pane -->
+  <aside class="detail-pane" id="detail-pane">
+    <div id="detail-content">
+      <div class="detail-cover">
+        <i data-lucide="book" style="width: 48px; height: 48px; color: #94a3b8;"></i>
+      </div>
+      <h2 class="detail-title">Select a book</h2>
+      <p class="detail-author">to see details</p>
+      <div class="detail-stats">
+        <div class="stat-item">
+          <span class="stat-value">0</span>
+          <span class="stat-label">Pages</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value">0</span>
+          <span class="stat-label">Ratings</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value">0</span>
+          <span class="stat-label">Reviews</span>
+        </div>
+      </div>
+      <p class="detail-desc">Click on any book in the list to view its information and place an order.</p>
+    </div>
+    <div id="detail-actions" style="display:none; margin-top: auto;">
+      <form id="order-form">
+        <input type="hidden" id="product-id">
+        <div class="form-group">
+          <label>Quantity</label>
+          <input type="number" id="quantity" value="1" min="1" style="margin-bottom: 1rem;">
+        </div>
+        <button type="submit" class="btn-primary">
+          <i data-lucide="shopping-cart"></i> Place Order Now
+        </button>
+      </form>
+      <div id="order-status" style="margin-top: 0.5rem; font-size: 0.875rem; text-align: center;"></div>
+    </div>
+  </aside>
+
+  <!-- Modals -->
+  <div id="login-modal" class="modal-overlay">
+    <div class="modal">
+      <h2 style="margin-bottom: 1.5rem;">Welcome to BookBase</h2>
+      <div class="form-group">
+        <label>Username</label>
+        <input type="text" id="username" placeholder="Enter username">
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="password" placeholder="Enter password">
+      </div>
+      <div style="display: flex; gap: 0.5rem; margin-top: 1.5rem;">
+        <button id="btn-login" class="btn-primary">Login</button>
+        <button id="btn-register" class="btn-primary" style="background: #fff; color: var(--primary); border: 1px solid var(--primary);">Register</button>
+      </div>
+      <div id="auth-message" style="margin-top: 1rem; font-size: 0.875rem; color: #ef4444; text-align: center;"></div>
+      <button onclick="document.getElementById('login-modal').style.display='none'" style="margin-top: 1rem; width: 100%; background: none; border: none; color: var(--text-muted); cursor: pointer;">Cancel</button>
+    </div>
+  </div>
+
+  <div id="create-product-modal" class="modal-overlay">
+    <div class="modal">
+      <h2 style="margin-bottom: 1.5rem;">New Product</h2>
+      <form id="create-product-form">
+        <div class="form-group">
+          <label>Title</label>
+          <input id="title" required>
+        </div>
+        <div class="form-group">
+          <label>Author</label>
+          <input id="author" required>
+        </div>
+        <div class="form-group">
+          <label>Price ($)</label>
+          <input id="price" type="number" step="0.01" required>
+        </div>
+        <div class="form-group">
+          <label>Stock</label>
+          <input id="stock" type="number" value="100">
+        </div>
+        <button type="submit" class="btn-primary">Create Product</button>
+      </form>
+      <div id="create-product-status" style="margin-top: 1rem; font-size: 0.875rem; text-align: center;"></div>
+      <button onclick="document.getElementById('create-product-modal').style.display='none'" style="margin-top: 1rem; width: 100%; background: none; border: none; color: var(--text-muted); cursor: pointer;">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+<script>lucide.createIcons();</script>
+</body>
+</html>
